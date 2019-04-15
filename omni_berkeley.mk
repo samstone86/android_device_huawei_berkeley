@@ -16,17 +16,27 @@
 
 # Inherit from those products. Most specific first.
 $(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit.mk)
-$(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
+
+# Get the prebuilt list of APNs
+$(call inherit-product, vendor/omni/config/gsm.mk)
+
+$(call inherit-product, $(SRC_TARGET_DIR)/product/aosp_base_telephony.mk)
+
+# must be before including omni part
+TARGET_BOOTANIMATION_SIZE := 1080p
+
+# Inherit from our custom product configuration
+$(call inherit-product, vendor/omni/config/common.mk)
 
 # Inherit from berkeley device
 $(call inherit-product, device/huawei/berkeley/device.mk)
 
-# Inherit some common Lineage stuff.
-$(call inherit-product, vendor/lineage/config/common_full_phone.mk)
+DEVICE_PACKAGE_OVERLAYS += device/huawei/berkeley/overlay
+DEVICE_PACKAGE_OVERLAYS += vendor/omni/overlay/CarrierConfig
 
 # Device identifier. This must come after all inclusions
 PRODUCT_DEVICE := berkeley
-PRODUCT_NAME := lineage_berkeley
+PRODUCT_NAME := omni_berkeley
 PRODUCT_BRAND := Huawei
 PRODUCT_MANUFACTURER := HUAWEI
 PRODUCT_MODEL := Honor View 10

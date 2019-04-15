@@ -16,21 +16,16 @@
 
 $(call inherit-product, $(SRC_TARGET_DIR)/product/product_launched_with_o.mk)
 
+# Inherit from kirin970-common
+$(call inherit-product, device/huawei/kirin970-common/kirin970.mk)
+
 # call the proprietary setup
 $(call inherit-product-if-exists, vendor/huawei/berkeley/berkeley-vendor.mk)
+$(call inherit-product, vendor/omni/config/phone-xxhdpi-4096-dalvik-heap.mk)
+$(call inherit-product, vendor/omni/config/phone-xxhdpi-2048-hwui-memory.mk)
 
 PRODUCT_AAPT_CONFIG := normal
 PRODUCT_AAPT_PREF_CONFIG := xxhdpi
 PRODUCT_AAPT_PREBUILT_DPI := xxhdpi xhdpi hdpi
 
-# Local overlays
-DEVICE_PACKAGE_OVERLAYS += \
-    $(LOCAL_PATH)/overlay \
-    $(LOCAL_PATH)/overlay-lineage
 
-# Boot animation
-TARGET_SCREEN_HEIGHT := 2160
-TARGET_SCREEN_WIDTH := 1080
-
-# Inherit from kirin970-common
-$(call inherit-product, device/huawei/kirin970-common/kirin970.mk)
